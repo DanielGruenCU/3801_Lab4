@@ -1,5 +1,3 @@
-clc;
-clear;
 
 function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, col)
 
@@ -76,6 +74,9 @@ ylabel('Velocity (m/s)');
 
 figure(fig(4));
 subplot(3,1,1);
+title('Inertial Velocity in X Body Frame Direction vs Time');
+xlabel('Time (s)');
+ylabel('Velocity (m/s)');
 plot(time, p, col); hold on;
 subplot(3,1,2);
 plot(time, q, col); hold on;
