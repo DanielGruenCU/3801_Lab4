@@ -1,6 +1,8 @@
 
 function PlotAircraftSim(time, aircraft_state_array, control_input_array, fig, col)
 
+%% Seperate into variables
+
 Xe = aircraft_state_array(1,:);
 Ye = aircraft_state_array(2,:);
 Ze = aircraft_state_array(3,:);
@@ -19,6 +21,8 @@ Lc = control_input_array(2,:);
 Mc = control_input_array(3,:);
 Nc = control_input_array(4,:);
 
+%% Plot individual displacement components vs time
+
 figure(fig(1));
 subplot(3,1,1);
 plot(time, Xe, col); hold on;
@@ -35,6 +39,8 @@ plot(time, Ze, col); hold on;
 title('Z Displacement vs Time');
 xlabel('Time (s)');
 ylabel('Displacement (m)');
+
+%% Plot Euler angles vs time
 
 figure(fig(2));
 subplot(3,1,1);
@@ -55,6 +61,8 @@ xlabel('Time (s)');
 ylabel('Angle (rad)');
 subplot(3,1,2);
 
+%% Plot inertial velocity components vs time
+
 figure(fig(3));
 subplot(3,1,1);
 plot(time, Ue, col); hold on;
@@ -72,6 +80,8 @@ title('Inertial Velocity w_e vs Time');
 xlabel('Time (s)');
 ylabel('Velocity (m/s)');
 
+%% Plot angular velocity components vs time
+
 figure(fig(4));
 subplot(3,1,1);
 plot(time, p, col); hold on;
@@ -88,6 +98,8 @@ plot(time, r, col); hold on;
 title('Angular Velocity r vs Time');
 xlabel('Time (s)');
 ylabel('Angular Velocity (rad/s)');
+
+%% Plot control forces and moments vs time
 
 figure(fig(5));
 subplot(2,2,1);
@@ -111,6 +123,8 @@ title('Control Moment N_c vs Time');
 xlabel('Time (s)');
 ylabel('Moment (Nm)');
 
+%% Plot path in 3D space 
+
 figure(fig(6));
 plot3(Xe,Ye,Ze,col);
 plot3(Xe(1),Ye(1),Ze(1),'g','o');
@@ -122,3 +136,5 @@ zlabel('Z Displacement (m)');
 legend('Path','Beginning', 'End');
 
 end
+
+
