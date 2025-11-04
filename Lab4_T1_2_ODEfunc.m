@@ -8,7 +8,6 @@ clc;
 m = 0.068;
 g = 9.81;
 d = 0.060;
-0.0024;
 I = [5.8e-5, 0, 0; 0, 7.2e-5, 0; 0, 0, 1e-4]; % Inertia matrix
 km = 0.0024; % Motor constant
 mu = 2e-6;

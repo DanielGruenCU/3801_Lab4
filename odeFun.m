@@ -3,7 +3,8 @@ clc;
 
 t_span = 0:0.1:10;
 
-var_initial = [0,0,10,0.0374855,0,0,0,5,0,0,0,0]';
+var_initial = [0, 0, 10, 0.03747373595, 0, 0, 0, 4.996492, -0.1872522, 0, 0, 0]'; %initial conditions 
+% in:         [Xe, Ye, Ze, phi, theta, psi, Ue, Ve, We, p, q, r]
 
 g = 9.81;
 I = [5.8*10^(-5), 0, 0;
@@ -15,7 +16,7 @@ km = 0.0024;
 d = 0.06;
 m = 0.068;
 
-motor_forces = [0.16665284396013,0.16665284396013,0.16665284396013,0.16665284396013]';
+motor_forces = [0.1668871645,0.1668871645,0.1668871645,0.1668871645]';
 
 [t, var] = ode45(@(t, var) QuadrotorEOM(t, var, g, m, I, d, km, nu, mu, motor_forces), t_span, var_initial);
 
@@ -60,21 +61,24 @@ t_th = tan(theta);
 
 Va = sqrt(Ue^2 + Ve^2 + We^2);
 
-D = -nu*Va*[Ue, c_ph*Ve, -(s_ph+s_th)*We]';
+
 
 %% Matrices
 
+% displacement matrices
 matrix_dis = [c_th*c_ps, s_ph*s_th*c_ps-c_ph*s_ps, c_ph*s_th*c_ps+s_ph*s_ps;
-            c_th*s_ps,   s_ph*s_th*s_ps+c_ph*c_ps, c_ph*s_th*s_ps-s_ph*c_ps;
-            -s_th,       s_ph*c_th,                c_ph*c_th];
-
+              c_th*s_ps, s_ph*s_th*s_ps+c_ph*c_ps, c_ph*s_th*s_ps-s_ph*c_ps;
+             -s_th,       s_ph*c_th,                c_ph*c_th];
+% Euler angle matrices
 matrix_euler = [1, s_ph*t_th, c_ph*t_th;
                 0, c_ph,      -s_ph;
                 0, s_ph/c_th, c_ph/c_th];
-
+% Acceleration matrices
 matrix_vel_1 = [r*Ve-q*We;p*We-r*Ue;q*Ue-p*Ve];
 matrix_vel_2 = [-s_th;c_th*s_ph;c_th*c_ph];
 
+D = -nu*Va*[Ue;Ve;We]; % change % [X, Y, Z]
+% Rotation rate matrices            
 matrix_rot_1 = [(Iy-Iz)*q*r/Ix;(Iz-Ix)*p*r/Iy;(Ix-Iy)*p*q/Iz];
 matrix_rot_2 = [L/Ix;M/Iy;N/Iz];
 matrix_rot_3 = [L_c/Ix;M_c/Iy;N_c/Iz];
@@ -83,7 +87,7 @@ matrix_rot_3 = [L_c/Ix;M_c/Iy;N_c/Iz];
 
 dis_dot = matrix_dis*[Ue;Ve;We];
 euler_dot = matrix_euler*[p;q;r];
-vel_dot = matrix_vel_1 + g*matrix_vel_2 + 1/m*D + 1/m*[0;0;Zc]; % not including aero forces or moments
+vel_dot = matrix_vel_1 + g.*matrix_vel_2 + (D+[0;0;Zc])/m; % not including aero forces or moments
 rot_dot = matrix_rot_1+matrix_rot_2+matrix_rot_3;
 
 var_dot = [dis_dot;euler_dot;vel_dot;rot_dot];
