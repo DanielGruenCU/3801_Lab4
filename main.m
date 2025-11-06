@@ -254,4 +254,7 @@ ylabel('Y Displacement (m)');
 zlabel('Z Displacement (m)');
 legend('Path','Beginning', 'End');
 hold off;
+
+
+InnerLoopFeedbackWithVel(var(10,:));
 end

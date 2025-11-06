@@ -154,7 +154,6 @@ zlabel('Z Displacement (m)');
 legend('Path','Beginning', 'End');
 zlim([0,50]);
 hold off;
-
 end
 
 
