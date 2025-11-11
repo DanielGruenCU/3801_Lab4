@@ -21,15 +21,15 @@ Iz = 1e-4;
 
 %eq = s^2 + (lambda1 + lambda2)*s + (lambda1*lambda2);
 % = s^2 + (K1 / Ix)s + (K2 / Ix);
-K1_lat = Ix * (lambda1 + lambda2);
-K1_long = Iy * (lambda1 + lambda2);
+K1_lat = Ix * -(lambda1 + lambda2);
+K1_long = Iy * -(lambda1 + lambda2);
 K2_lat = Ix * (lambda1 * lambda2);
 K2_long = Iy * (lambda1 * lambda2);
 
 Fc = [0; 0; m*g];
 Lc = -(K1_lat * p) - (K2_lat * phi);
 Mc = -(K1_long * q) - (K2_long * theta);
-Nc = 0;
+Nc = -.004*r;
 
 Gc = [Lc; Mc; Nc];
 end
